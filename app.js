@@ -76,7 +76,7 @@ function handleError(res) {
 
 
 function createHelpers (req, res, next) {
-  req.found = function (result) {
+  res.found = function (result) {
     var data = _.isArray(result) ? result : [result]
     return res.json({
       "result": true,
@@ -84,7 +84,7 @@ function createHelpers (req, res, next) {
     })
   }
 
-  req.notFound = function (result) {
+  res.notFound = function (result) {
     return res.json({
       "result": false
     })
