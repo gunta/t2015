@@ -24,6 +24,8 @@ router.get('/', function (req, res, next) {
      var userId = req.query.findByUserId
 
      r.table('users').filter({'userId': userId}).run(req._rdbConn).then(function (data) {
+       console.log(data.toString())
+       console.log(data)
         res.json(data)
      }).error(handleError(res))
        .finally(next)
