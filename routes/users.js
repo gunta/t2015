@@ -18,6 +18,19 @@ router.get('/', function (req, res, next) {
 
 })
 
+router.get('/searchUser', function (req, res, next) {
+   if (req.params.findByUserId) {
+     var userId = req.params.findByUserId
+
+     r.table('users').filter({'userId': userId}).run(req._rdbConn).then(function (data) {
+        res.json(userId)
+     }).error(handleError(res))
+       .finally(next)
+   } else {
+     res.send('nothing')
+   }
+})
+
 function handleError(res) {
   return function(error) {
     res.send(500, {error: error.message})
