@@ -23,12 +23,11 @@ router.get('/', function (req, res, next) {
    if (req.query.findByUserId) {
      var userId = req.query.findByUserId
 
-     r.table('users').filter({'userId': userId}).run(req._rdbConn).then(function (data) {
-       console.log(data.toString())
-       console.log(data)
-        res.json(data)
-     }).error(handleError(res))
-       .finally(next)
+     r.table('users').get(userId).run(req._rdbConn).then(function (result) {
+       console.log(result)
+       res.json(result)
+     }).error(handleError(res)).finally(next)
+
    } else {
      res.send('nothing')
    }
