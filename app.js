@@ -64,6 +64,16 @@ app.use(function (err, req, res, next) {
 })
 
 
+/*
+ * Send back a 500 error
+ */
+function handleError(res) {
+  return function(error) {
+    res.send(500, {error: error.message});
+  }
+}
+
+
 function createConnection(req, res, next) {
   r.connect(config.rethinkdb).then(function(conn) {
     req._rdbConn = conn
