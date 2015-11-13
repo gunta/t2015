@@ -5,13 +5,13 @@ var _ = require('lodash')
 
 var r = require('rethinkdb')
 
-//function found(res, result) {
-//  var data = _.isArray(result) ? result : [result]
-//  return res.json({
-//    "result": true,
-//    "data": data
-//  })
-//}
+function found(res, result) {
+  var data = _.isArray(result) ? result : [result]
+  return res.json({
+    "result": true,
+    "data": data
+  })
+}
 
 /* GET users listing. */
 //router.get('/', function (req, res, next) {
@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
      var userId = req.query.findByUserId
 
      r.table('users').get(userId).run(req._rdbConn).then(function (result) {
-       res.found(result)
+       found(res, result)
      }).error(handleError(res)).finally(next)
 
    } else {
