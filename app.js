@@ -27,6 +27,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(createConnection)
+app.use(createHelpers)
 
 app.use('/', routes)
 app.use('/searchUser', users)
@@ -73,6 +74,23 @@ function handleError(res) {
   }
 }
 
+
+function createHelpers (req, res, next) {
+  req.found = function (result) {
+    var data = _.isArray(result) ? result : [result]
+    return res.json({
+      "result": true,
+      "data": data
+    })
+  }
+
+  req.notFound = function (result) {
+    return res.json({
+      "result": false
+    })
+  }
+
+}
 
 function createConnection(req, res, next) {
   r.connect(config.rethinkdb).then(function(conn) {
