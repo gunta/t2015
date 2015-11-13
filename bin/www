@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+console.log("Starting")
+
 var app = require('../app');
 var debug = require('debug')('t2015:server');
 var http = require('http');
