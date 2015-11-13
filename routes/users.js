@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   }).error(handleError(res))
     .finally(next)
 
-  res.send('respond with a resource 2')
+  //res.send('respond with a resource 2')
 
 
 })
