@@ -4,21 +4,21 @@ var router = express.Router()
 var r = require('rethinkdb')
 
 /* GET users listing. */
+//router.get('/', function (req, res, next) {
+//
+//  r.table('users').run(req._rdbConn).then(function (cursor) {
+//    console.log(cursor.toArray())
+//    return cursor.toArray()
+//  }).then(function (result) {
+//    console.log(result)
+//    res.send(JSON.stringify(result))
+//  }).error(handleError(res))
+//    .finally(next)
+//  //res.send('respond with a resource 2')
+//
+//})
+
 router.get('/', function (req, res, next) {
-
-  r.table('users').run(req._rdbConn).then(function (cursor) {
-    console.log(cursor.toArray())
-    return cursor.toArray()
-  }).then(function (result) {
-    console.log(result)
-    res.send(JSON.stringify(result))
-  }).error(handleError(res))
-    .finally(next)
-  //res.send('respond with a resource 2')
-
-})
-
-router.get('/searchUser', function (req, res, next) {
    if (req.params.findByUserId) {
      var userId = req.params.findByUserId
 

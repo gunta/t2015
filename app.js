@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(createConnection)
 
 app.use('/', routes)
-app.use('/users', users)
+app.use('/searchUser', users)
 
 
 // catch 404 and forward to error handler
