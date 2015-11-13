@@ -91,7 +91,6 @@ function createHelpers (req, res, next) {
       "result": false
     })
   }
-
 }
 
 function createConnection(req, res, next) {

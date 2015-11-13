@@ -45,7 +45,7 @@ router.get('/', function (req, res, next) {
   if (req.query.findByUserPublicScoreGTE) {
     console.log("GTE", parseInt(req.query.findByUserPublicScoreGTE))
     var userPublicScoreGTE = req.query.findByUserPublicScoreGTE
-    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScoreGTE').gt(userPublicScoreGTE)).limit(limit)
+    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScore').gt(userPublicScoreGTE)).limit(limit)
       .run(req._rdbConn).then(function (cursor) {
         return cursor.toArray()
       })
@@ -57,7 +57,7 @@ router.get('/', function (req, res, next) {
   if (req.query.findByUserPublicScoreLTE) {
     console.log("LTE")
     var userPublicScoreLTE = parseInt(req.query.findByUserPublicScoreLTE)
-    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScoreLTE').lt(userPublicScoreLTE)).limit(limit)
+    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScore').lt(userPublicScoreLTE)).limit(limit)
       .run(req._rdbConn).then(function (cursor) {
         return cursor.toArray()
       })
