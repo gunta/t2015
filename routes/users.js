@@ -12,7 +12,6 @@ function found(res, result) {
   } else {
     data = []
   }
-
   return res.json({
     "result": true,
     "data": data
@@ -64,7 +63,7 @@ router.get('/', function (req, res, next) {
       })
       .then(function (result) {
         found(res, result)
-      }).error(handleError(res)).finally(next)
+      }).finally(next)
   }
 
   if (req.query.findByUserFriendsNumber) {
@@ -75,7 +74,7 @@ router.get('/', function (req, res, next) {
       })
       .then(function (result) {
         found(res, result)
-      }).error(handleError(res)).finally(next)
+      }).finally(next)
   }
 
 })
