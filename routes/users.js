@@ -6,7 +6,13 @@ var _ = require('lodash')
 var r = require('rethinkdb')
 
 function found(res, result) {
-  var data = _.isArray(result) ? result : [result]
+  var data
+  if (result) {
+    data = _.isArray(result) ? result : [result]
+  } else {
+    data = []
+  }
+
   return res.json({
     "result": true,
     "data": data
