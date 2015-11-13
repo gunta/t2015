@@ -1,7 +1,17 @@
 var express = require('express')
 var router = express.Router()
 
+var _ = require('lodash')
+
 var r = require('rethinkdb')
+
+function found(res, result) {
+  var data = _.isArray(result) ? result : [result]
+  return res.json({
+    "result": true,
+    "data": data
+  })
+}
 
 /* GET users listing. */
 //router.get('/', function (req, res, next) {
@@ -24,8 +34,8 @@ router.get('/', function (req, res, next) {
      var userId = req.query.findByUserId
 
      r.table('users').get(userId).run(req._rdbConn).then(function (result) {
-       console.log(result)
-       res.json(result)
+
+       found(result)
      }).error(handleError(res)).finally(next)
 
    } else {
