@@ -6,13 +6,13 @@ var r = require('rethinkdb')
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 
-  r.table('users').run(req._rdbConn).then(function () {
-
+  r.table('users').run(req._rdbConn).then(function (cursor) {
+    console.log(cursor)
   }).then(function (result) {
+    console.log(result)
     res.send(JSON.stringify(result))
   }).error(handleError(res))
     .finally(next)
-
   //res.send('respond with a resource 2')
 
 
