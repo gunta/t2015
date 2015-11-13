@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
      var userId = req.params.findByUserId
 
      r.table('users').filter({'userId': userId}).run(req._rdbConn).then(function (data) {
-        res.json(userId)
+        res.json(data)
      }).error(handleError(res))
        .finally(next)
    } else {
