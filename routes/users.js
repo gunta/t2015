@@ -36,20 +36,34 @@ function found(res, result) {
 
 router.get('/', function (req, res, next) {
   console.log(req.query)
-   if (req.query.findByUserId) {
-     var userId = req.query.findByUserId
 
-     r.table('users').get(userId).run(req._rdbConn).then(function (result) {
-       found(res, result)
-     }).error(handleError(res)).finally(next)
+  var limit = req.query.limit ? req.query.limit : 100
 
-   } else {
-     res.send('nothing')
-   }
+  if (req.query.findByUserId) {
+    var userId = req.query.findByUserId
+    r.table('users').get(userId).limit(limit).run(req._rdbConn).then(function (result) {
+      found(res, result)
+    }).error(handleError(res)).finally(next)
+  }
+
+  if (req.query.findByUserPublicScoreGTE) {
+    var userPublicScoreGTE = req.query.findByUserPublicScoreGTE
+    r.table('users').filter(
+      (r.row.has_fields('name'))
+      & (r.row['age'] > userPublicScoreGTE)
+    ).limit(limit).run(req._rdbConn).then(function (cursor) {
+      return cursor.toArray()
+    }).then(function (result) {
+      found(res, result)
+
+    }).error(handleError(res)).finally(next)
+  }
+
+
 })
 
 function handleError(res) {
-  return function(error) {
+  return function (error) {
     res.send(500, {error: error.message})
   }
 }
