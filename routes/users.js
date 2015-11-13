@@ -19,9 +19,9 @@ var r = require('rethinkdb')
 //})
 
 router.get('/', function (req, res, next) {
-  console.log(req.params)
-   if (req.params.findByUserId) {
-     var userId = req.params.findByUserId
+  console.log(req.query)
+   if (req.query.findByUserId) {
+     var userId = req.query.findByUserId
 
      r.table('users').filter({'userId': userId}).run(req._rdbConn).then(function (data) {
         res.json(data)
