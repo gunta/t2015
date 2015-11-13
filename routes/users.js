@@ -18,6 +18,12 @@ router.get('/', function (req, res, next) {
 
 })
 
+function handleError(res) {
+  return function(error) {
+    res.send(500, {error: error.message});
+  }
+}
+
 function get(req, res, next) {
   r.table('todos').orderBy({index: "createdAt"}).run(req._rdbConn).then(function (cursor) {
     return cursor.toArray();
