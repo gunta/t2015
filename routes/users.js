@@ -7,6 +7,7 @@ var r = require('rethinkdb')
 router.get('/', function (req, res, next) {
 
   r.table('users').run(req._rdbConn).then(function (cursor) {
+    console.log(cursor.toArray())
     return cursor.toArray()
   }).then(function (result) {
     console.log(result)
@@ -14,7 +15,6 @@ router.get('/', function (req, res, next) {
   }).error(handleError(res))
     .finally(next)
   //res.send('respond with a resource 2')
-
 
 })
 
