@@ -31,7 +31,6 @@ function found(res, result) {
 //  }).error(handleError(res))
 //    .finally(next)
 //  //res.send('respond with a resource 2')
-//
 //})
 
 router.get('/', function (req, res, next) {
@@ -46,15 +45,35 @@ router.get('/', function (req, res, next) {
 
   if (req.query.findByUserPublicScoreGTE) {
     var userPublicScoreGTE = req.query.findByUserPublicScoreGTE
-    r.table('users').filter(
-      (r.row.hasFields('userPublicScore'))
-      & (r.row['age'] > userPublicScoreGTE)
-    ).limit(limit).run(req._rdbConn).then(function (cursor) {
-      return cursor.toArray()
-    }).then(function (result) {
-      found(res, result)
+    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScoreGTE').gt(userPublicScoreGTE)).limit(limit)
+      .run(req._rdbConn).then(function (cursor) {
+        return cursor.toArray()
+      })
+      .then(function (result) {
+        found(res, result)
+      }).error(handleError(res)).finally(next)
+  }
 
-    }).error(handleError(res)).finally(next)
+  if (req.query.findByUserPublicScoreLTE) {
+    var userPublicScoreLTE = req.query.userPublicScoreLTE
+    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userPublicScoreLTE').lt(userPublicScoreLTE)).limit(limit)
+      .run(req._rdbConn).then(function (cursor) {
+        return cursor.toArray()
+      })
+      .then(function (result) {
+        found(res, result)
+      }).error(handleError(res)).finally(next)
+  }
+
+  if (req.query.findByUserFriendsNumber) {
+    var userFriendsNumber = req.query.userFriendsNumber
+    r.table('users').orderBy(r.desc('userNo')).filter(r.row('userFriendsNumber').lt(userFriendsNumber)).limit(limit)
+      .run(req._rdbConn).then(function (cursor) {
+        return cursor.toArray()
+      })
+      .then(function (result) {
+        found(res, result)
+      }).error(handleError(res)).finally(next)
   }
 
 })
@@ -63,15 +82,6 @@ function handleError(res) {
   return function (error) {
     res.send(500, {error: error.message})
   }
-}
-
-function get(req, res, next) {
-  r.table('todos').orderBy({index: "createdAt"}).run(req._rdbConn).then(function (cursor) {
-    return cursor.toArray()
-  }).then(function (result) {
-    res.send(JSON.stringify(result))
-  }).error(handleError(res))
-    .finally(next)
 }
 
 module.exports = router
