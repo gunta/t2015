@@ -19,6 +19,7 @@ var r = require('rethinkdb')
 //})
 
 router.get('/', function (req, res, next) {
+  console.log(req.params)
    if (req.params.findByUserId) {
      var userId = req.params.findByUserId
 
