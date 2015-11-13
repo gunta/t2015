@@ -35,8 +35,6 @@ function found(res, result) {
 //})
 
 router.get('/', function (req, res, next) {
-  console.log(req.query)
-
   var limit = req.query.limit ? req.query.limit : 100
 
   if (req.query.findByUserId) {
@@ -49,7 +47,7 @@ router.get('/', function (req, res, next) {
   if (req.query.findByUserPublicScoreGTE) {
     var userPublicScoreGTE = req.query.findByUserPublicScoreGTE
     r.table('users').filter(
-      (r.row.has_fields('name'))
+      (r.row.hasFields('userPublicScore'))
       & (r.row['age'] > userPublicScoreGTE)
     ).limit(limit).run(req._rdbConn).then(function (cursor) {
       return cursor.toArray()
@@ -58,7 +56,6 @@ router.get('/', function (req, res, next) {
 
     }).error(handleError(res)).finally(next)
   }
-
 
 })
 
