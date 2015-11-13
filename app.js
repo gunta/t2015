@@ -98,7 +98,7 @@ function createConnection(req, res, next) {
   r.connect(config.rethinkdb).then(function(conn) {
     req._rdbConn = conn
     next()
-  }).error(handleError(res))
+  })//.error(handleError(res))
 }
 
 /*
