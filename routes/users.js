@@ -7,7 +7,7 @@ var r = require('rethinkdb')
 router.get('/', function (req, res, next) {
 
   r.table('users').run(req._rdbConn).then(function (cursor) {
-    console.log(cursor)
+    return cursor.toArray()
   }).then(function (result) {
     console.log(result)
     res.send(JSON.stringify(result))
@@ -20,17 +20,17 @@ router.get('/', function (req, res, next) {
 
 function handleError(res) {
   return function(error) {
-    res.send(500, {error: error.message});
+    res.send(500, {error: error.message})
   }
 }
 
 function get(req, res, next) {
   r.table('todos').orderBy({index: "createdAt"}).run(req._rdbConn).then(function (cursor) {
-    return cursor.toArray();
+    return cursor.toArray()
   }).then(function (result) {
-    res.send(JSON.stringify(result));
+    res.send(JSON.stringify(result))
   }).error(handleError(res))
-    .finally(next);
+    .finally(next)
 }
 
 module.exports = router
