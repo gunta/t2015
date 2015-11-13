@@ -38,7 +38,7 @@ router.get('/', function (req, res, next) {
 
   if (req.query.findByUserId) {
     var userId = req.query.findByUserId
-    r.table('users').get(userId).limit(limit).run(req._rdbConn).then(function (result) {
+    r.table('users').get(userId).run(req._rdbConn).then(function (result) {
       found(res, result)
     }).error(handleError(res)).finally(next)
   }
