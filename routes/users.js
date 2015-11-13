@@ -33,7 +33,7 @@ function found(res, result) {
 //})
 
 router.get('/', function (req, res, next) {
-  var limit = req.query.limit ? req.query.limit : 100
+  var limit = req.query.limit ? parseInt(req.query.limit) : 100
 
   if (req.query.findByUserId) {
     var userId = req.query.findByUserId
